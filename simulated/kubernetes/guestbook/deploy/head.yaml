@@ -2,6 +2,5 @@ apiVersion: edge.limani.kube/v1alpha1
 kind: ConfigSpec
 metadata:
   name: foo
-  namespace: default
 spec:
   content:
