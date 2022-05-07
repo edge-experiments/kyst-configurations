@@ -1,0 +1,6 @@
+data:
+  configManagementPlugins: |
+    - name: wrap4kyst
+      generate:
+        command: ["/bin/bash", "-c"]
+        args: ["./mk-body.sh && kustomize build ."]
