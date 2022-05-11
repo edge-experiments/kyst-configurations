@@ -1,0 +1,6 @@
+apiVersion: edge.limani.kube/v1alpha1
+kind: InventoryDevice
+metadata:
+  name: bar
+  labels:
+    edge.limani.kube/device-group-name: bar
