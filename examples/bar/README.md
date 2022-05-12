@@ -2,7 +2,7 @@ This directory serves as an example to manually access the kyst device server.
 
 1. In the kyst backend cluster's `default` namespace, create a deviceGroup, a configSpec, and an inventoryDevice, all named `bar`.
 ```shell
-kubectl apply -f hack/bar/
+kubectl apply -f examples/bar/
 ```
 
 2. Send a request to the kyst device server via curl. For example:
