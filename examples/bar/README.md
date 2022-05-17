@@ -5,7 +5,9 @@ This directory serves as an example to manually access the kyst device server.
 kubectl apply -f examples/bar/
 ```
 
-2. Send a request to the kyst device server via curl. For example:
+2. Generate client key and client certificate for inventoryDevice `bar`, as described in the second half of this [section](https://github.com/edge-experiments/kyst#demo-with-one-shot-agent) (regarding PKI identity) in kyst documentation.
+
+3. Send a request to the kyst device server via curl. For example:
 ```shell
 curl https://<device-server-ip>:<device-server-port>/apis/edge.limani.kube/v1alpha1/namespaces/default/devicespecs/bar \
     --cacert /root/limani/hack/pki/ca/ca.crt \
@@ -33,7 +35,7 @@ The response should be something like this:
 }
 ```
 
-3. The `content` of the returned deviceSpec is base64 encoded:
+4. The `content` of the returned deviceSpec is base64 encoded:
 ```shell
 ubuntu@ip-192-168-1-38:~$ echo YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGd1ZXN0Ym9vay11aQpzcGVjOgogIHJlcGxpY2FzOiAxCiAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IDMKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGd1ZXN0Ym9vay11aQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGd1ZXN0Ym9vay11aQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogZ2NyLmlvL2hlcHRpby1pbWFnZXMva3MtZ3Vlc3Rib29rLWRlbW86MC4yCiAgICAgICAgbmFtZTogZ3Vlc3Rib29rLXVpCiAgICAgICAgcG9ydHM6CiAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MAogICAgICAgIHJlc291cmNlczoKICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgY3B1OiAxMDBtCiAgICAgICAgICAgIG1lbW9yeTogNjRNaQo= | base64 -d
 apiVersion: apps/v1

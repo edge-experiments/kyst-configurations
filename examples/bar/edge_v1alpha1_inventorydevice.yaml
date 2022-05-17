@@ -4,3 +4,10 @@ metadata:
   name: bar
   labels:
     edge.limani.kube/device-group-name: bar
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: InventoryDevice
+metadata:
+  name: ai4edge
+  labels:
+    edge.limani.kube/device-group-name: ai4edge

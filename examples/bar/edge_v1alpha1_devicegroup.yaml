@@ -4,3 +4,10 @@ metadata:
   name: bar
 spec:
   configSpecName: bar
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: DeviceGroup
+metadata:
+  name: ai4edge
+spec:
+  configSpecName: ai4edge
