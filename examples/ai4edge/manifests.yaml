@@ -1,0 +1,24 @@
+# https://github.com/redhat-et/AI-for-edge-microshift-demo
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: ConfigSpec
+metadata:
+  name: ai4edge
+spec:
+  content:
+  - aHR0cHM6Ly9naXRodWIuY29tL3JlZGhhdC1ldC9BSS1mb3ItZWRnZS1taWNyb3NoaWZ0LWRlbW8vcmF3L21haW4vc2VydmVyL2NhbS1zZXJ2ZXIueWFtbAo=
+  - aHR0cHM6Ly9naXRodWIuY29tL3JlZGhhdC1ldC9BSS1mb3ItZWRnZS1taWNyb3NoaWZ0LWRlbW8vcmF3L21haW4vd2lmaS1hcC9jYW0tYXAueWFtbAo=
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: DeviceGroup
+metadata:
+  name: ai4edge
+spec:
+  configSpecName: ai4edge
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: InventoryDevice
+metadata:
+  name: ai4edge
+  labels:
+    edge.limani.kube/device-group-name: ai4edge
