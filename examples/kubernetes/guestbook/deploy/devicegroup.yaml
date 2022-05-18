@@ -1,0 +1,6 @@
+apiVersion: edge.limani.kube/v1alpha1
+kind: DeviceGroup
+metadata:
+  name: guestbook1  # named for device simulator
+spec:
+  configSpecName: guestbook
