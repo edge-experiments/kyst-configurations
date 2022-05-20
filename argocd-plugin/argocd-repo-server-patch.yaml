@@ -1,0 +1,22 @@
+spec:
+  template:
+    spec:
+      volumes:
+      - name: custom-tools
+        emptyDir: {}
+      initContainers:
+      - name: download-tools
+        # replace this with the real image
+        image: dummy-reg/dummy-repo/wrap4kyst:latest
+        command: [sh, -c]
+        args:
+        - cp /mk-body.sh /custom-tools/
+        volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
+      containers:
+      - name: argocd-repo-server
+        volumeMounts:
+        - mountPath: /usr/local/bin/mk-body.sh
+          name: custom-tools
+          subPath: mk-body.sh
