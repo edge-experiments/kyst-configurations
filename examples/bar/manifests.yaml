@@ -4,8 +4,42 @@ metadata:
   name: bar
 spec:
   content:
-  - YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGd1ZXN0Ym9vay11aQpzcGVjOgogIHJlcGxpY2FzOiAxCiAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IDMKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGd1ZXN0Ym9vay11aQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGd1ZXN0Ym9vay11aQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogZ2NyLmlvL2hlcHRpby1pbWFnZXMva3MtZ3Vlc3Rib29rLWRlbW86MC4yCiAgICAgICAgbmFtZTogZ3Vlc3Rib29rLXVpCiAgICAgICAgcG9ydHM6CiAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MAogICAgICAgIHJlc291cmNlczoKICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgY3B1OiAxMDBtCiAgICAgICAgICAgIG1lbW9yeTogNjRNaQo=
-  - YXBpVmVyc2lvbjogdjEKa2luZDogU2VydmljZQptZXRhZGF0YToKICBuYW1lOiBndWVzdGJvb2stdWkKc3BlYzoKICBwb3J0czoKICAtIHBvcnQ6IDgwCiAgICB0YXJnZXRQb3J0OiA4MAogIHNlbGVjdG9yOgogICAgYXBwOiBndWVzdGJvb2stdWkK
+  - |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: guestbook-ui
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 3
+      selector:
+        matchLabels:
+          app: guestbook-ui
+      template:
+        metadata:
+          labels:
+            app: guestbook-ui
+        spec:
+          containers:
+          - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
+            name: guestbook-ui
+            ports:
+            - containerPort: 80
+            resources:
+              limits:
+                cpu: 100m
+                memory: 64Mi
+  - |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: guestbook-ui
+    spec:
+      ports:
+      - port: 80
+        targetPort: 80
+      selector:
+        app: guestbook-ui
 ---
 apiVersion: edge.limani.kube/v1alpha1
 kind: DeviceGroup

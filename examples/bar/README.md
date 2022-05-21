@@ -26,40 +26,11 @@ The response should be something like this:
     "creationTimestamp": null
   },
   "content": [
-    "YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGd1ZXN0Ym9vay11aQpzcGVjOgogIHJlcGxpY2FzOiAxCiAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IDMKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGd1ZXN0Ym9vay11aQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGd1ZXN0Ym9vay11aQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogZ2NyLmlvL2hlcHRpby1pbWFnZXMva3MtZ3Vlc3Rib29rLWRlbW86MC4yCiAgICAgICAgbmFtZTogZ3Vlc3Rib29rLXVpCiAgICAgICAgcG9ydHM6CiAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MAogICAgICAgIHJlc291cmNlczoKICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgY3B1OiAxMDBtCiAgICAgICAgICAgIG1lbW9yeTogNjRNaQo=",
-    "YXBpVmVyc2lvbjogdjEKa2luZDogU2VydmljZQptZXRhZGF0YToKICBuYW1lOiBndWVzdGJvb2stdWkKc3BlYzoKICBwb3J0czoKICAtIHBvcnQ6IDgwCiAgICB0YXJnZXRQb3J0OiA4MAogIHNlbGVjdG9yOgogICAgYXBwOiBndWVzdGJvb2stdWkK"
+    "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: guestbook-ui\nspec:\n  replicas: 1\n  revisionHistoryLimit: 3\n  selector:\n    matchLabels:\n      app: guestbook-ui\n  template:\n    metadata:\n      labels:\n        app: guestbook-ui\n    spec:\n      containers:\n      - image: gcr.io/heptio-images/ks-guestbook-demo:0.2\n        name: guestbook-ui\n        ports:\n        - containerPort: 80\n        resources:\n          limits:\n            cpu: 100m\n            memory: 64Mi\n",
+    "apiVersion: v1\nkind: Service\nmetadata:\n  name: guestbook-ui\nspec:\n  ports:\n  - port: 80\n    targetPort: 80\n  selector:\n    app: guestbook-ui\n"
   ],
   "specName": "default/bar",
-  "specVersion": "179810",
-  "lastInputTime": "2022-05-11T17:06:03Z"
+  "specVersion": "2222552",
+  "lastInputTime": "2022-05-17T20:29:59Z"
 }
-```
-
-4. The `content` of the returned deviceSpec is base64 encoded:
-```shell
-ubuntu@ip-192-168-1-38:~$ echo YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGd1ZXN0Ym9vay11aQpzcGVjOgogIHJlcGxpY2FzOiAxCiAgcmV2aXNpb25IaXN0b3J5TGltaXQ6IDMKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGd1ZXN0Ym9vay11aQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGd1ZXN0Ym9vay11aQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogZ2NyLmlvL2hlcHRpby1pbWFnZXMva3MtZ3Vlc3Rib29rLWRlbW86MC4yCiAgICAgICAgbmFtZTogZ3Vlc3Rib29rLXVpCiAgICAgICAgcG9ydHM6CiAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MAogICAgICAgIHJlc291cmNlczoKICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgY3B1OiAxMDBtCiAgICAgICAgICAgIG1lbW9yeTogNjRNaQo= | base64 -d
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: guestbook-ui
-spec:
-  replicas: 1
-  revisionHistoryLimit: 3
-  selector:
-    matchLabels:
-      app: guestbook-ui
-  template:
-    metadata:
-      labels:
-        app: guestbook-ui
-    spec:
-      containers:
-      - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
-        name: guestbook-ui
-        ports:
-        - containerPort: 80
-        resources:
-          limits:
-            cpu: 100m
-            memory: 64Mi
 ```

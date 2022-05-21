@@ -6,8 +6,8 @@ metadata:
   name: ai4edge
 spec:
   content:
-  - aHR0cHM6Ly9naXRodWIuY29tL3JlZGhhdC1ldC9BSS1mb3ItZWRnZS1taWNyb3NoaWZ0LWRlbW8vcmF3L21haW4vc2VydmVyL2NhbS1zZXJ2ZXIueWFtbAo=
-  - aHR0cHM6Ly9naXRodWIuY29tL3JlZGhhdC1ldC9BSS1mb3ItZWRnZS1taWNyb3NoaWZ0LWRlbW8vcmF3L21haW4vd2lmaS1hcC9jYW0tYXAueWFtbAo=
+  - https://github.com/redhat-et/AI-for-edge-microshift-demo/raw/main/server/cam-server.yaml
+  - https://github.com/redhat-et/AI-for-edge-microshift-demo/raw/main/wifi-ap/cam-ap.yaml
 ---
 apiVersion: edge.limani.kube/v1alpha1
 kind: DeviceGroup
