@@ -1,3 +1,9 @@
+Make the custom tool available in argocd-repo-server pod.
+Replace the dummy `image` of `argocd-plugin/argocd-repo-server-patch.yaml` with real image, then run:
+```shell
+kubectl patch -n argocd deployment argocd-repo-server --patch-file=argocd-plugin/argocd-repo-server-patch.yaml
+```
+
 Register the `wrap4kyst` Argo CD plugin:
 ```shell
 kubectl patch -n argocd configmap argocd-cm --patch-file argocd-plugin/argocd-cm-patch.yaml
