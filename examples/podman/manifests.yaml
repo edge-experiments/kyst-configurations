@@ -1,0 +1,46 @@
+# https://github.com/containers/podman-compose/tree/devel/examples/wordpress
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: ConfigSpec
+metadata:
+  name: podman
+spec:
+  content:
+  - |
+    ---
+    volumes:
+      db_data:
+    services:
+      wordpress:
+        image: docker.io/library/wordpress:latest
+        ports:
+          - 8080:80
+        environment:
+          - WORDPRESS_DB_HOST=db
+          - WORDPRESS_DB_USER=wordpress
+          - WORDPRESS_DB_PASSWORD=password
+          - WORDPRESS_DB_NAME=wordpress
+      db:
+        image: docker.io/library/mariadb:10.6.4-focal
+        command: '--default-authentication-plugin=mysql_native_password'
+        volumes:
+          - db_data:/var/lib/mysql
+        environment:
+          - MYSQL_ROOT_PASSWORD=somewordpress
+          - MYSQL_DATABASE=wordpress
+          - MYSQL_USER=wordpress
+          - MYSQL_PASSWORD=password
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: DeviceGroup
+metadata:
+  name: podman
+spec:
+  configSpecName: podman
+---
+apiVersion: edge.limani.kube/v1alpha1
+kind: InventoryDevice
+metadata:
+  name: podman
+  labels:
+    edge.limani.kube/device-group-name: podman
