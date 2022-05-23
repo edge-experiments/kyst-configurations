@@ -3,4 +3,4 @@ kind: ConfigSpec
 metadata:
   name: guestbook
 spec:
-  content:
+  content: []
