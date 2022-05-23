@@ -1,6 +1,7 @@
 apiVersion: edge.limani.kube/v1alpha1
 kind: ConfigSpec
 metadata:
+  # edit the name here
   name: guestbook
 spec:
-  content:
+  content: []

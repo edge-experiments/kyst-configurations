@@ -10,13 +10,13 @@ spec:
         image: dummy-reg/dummy-repo/wrap4kyst:latest
         command: [sh, -c]
         args:
-        - cp /mk-body.sh /custom-tools/
+        - cp /wrap4kyst /custom-tools/
         volumeMounts:
         - mountPath: /custom-tools
           name: custom-tools
       containers:
       - name: argocd-repo-server
         volumeMounts:
-        - mountPath: /usr/local/bin/mk-body.sh
+        - mountPath: /usr/local/bin/wrap4kyst
           name: custom-tools
-          subPath: mk-body.sh
+          subPath: wrap4kyst
