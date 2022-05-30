@@ -2,6 +2,6 @@ apiVersion: edge.limani.kube/v1alpha1
 kind: DeviceGroup
 metadata:
   # edit the name here
-  name: guestbook1
+  name: guestbook1 # inventory devices will be created by device simulator
 spec:
   configSpecName: guestbook

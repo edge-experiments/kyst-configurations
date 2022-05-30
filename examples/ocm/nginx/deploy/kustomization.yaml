@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - configspec.yaml
 - devicegroup.yaml
+- inventorydevice.yaml
