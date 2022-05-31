@@ -1,1 +1,4 @@
 .DS_Store
+
+argocd-plugin/wrap4kyst/configspec.yaml
+argocd-plugin/wrap4kyst/debug
