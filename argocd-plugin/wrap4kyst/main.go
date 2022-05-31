@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
 	"log"
 
 	"github.com/edge-experiments/wrap4kyst/ocm"
@@ -24,32 +23,23 @@ func main() {
 	log.Println("target:", *target)
 
 	if *target == "ocm" {
-		ocm.WrapConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir)
+		ocm.WrapIntoConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir)
 		return
 	}
 
-	dataStructure, err := util.ReadEmtpyConfigSpec(*emptyConfigSpecFN)
+	configSpec, err := util.ReadEmtpyConfigSpec(*emptyConfigSpecFN)
 	if err != nil {
 		log.Fatalf("error reading empty configspec: %v", err)
 	}
 
+	rawContent := util.ComposeRawContent(*manifestDir)
 	content := []string{}
-	items, _ := ioutil.ReadDir(*manifestDir)
-	for _, item := range items {
-		if item.IsDir() {
-			log.Printf("Found directory: %s, skipping", item.Name())
-		} else {
-			log.Printf("Found file: %s, adding to content", item.Name())
-			bytes, err := ioutil.ReadFile(*manifestDir + item.Name())
-			if err != nil {
-				log.Fatal(err)
-			}
-			content = append(content, string(bytes))
-		}
+	for _, item := range rawContent {
+		content = append(content, string(item))
 	}
-	dataStructure["spec"].(map[string]interface{})["content"] = content
+	configSpec["spec"].(map[string]interface{})["content"] = content
 
-	err = util.WriteConfigSpec(*configSpecFN, dataStructure)
+	err = util.WriteConfigSpec(*configSpecFN, configSpec)
 	if err != nil {
 		log.Fatalf("error writing configspec: %v", err)
 	}
