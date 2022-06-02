@@ -1,6 +1,6 @@
 # https://github.com/containers/podman-compose/tree/devel/examples/wordpress
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: ConfigSpec
 metadata:
   name: podman
@@ -31,16 +31,16 @@ spec:
           - MYSQL_USER=wordpress
           - MYSQL_PASSWORD=password
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: DeviceGroup
 metadata:
   name: podman
 spec:
   configSpecName: podman
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: InventoryDevice
 metadata:
   name: podman
   labels:
-    edge.limani.kube/device-group-name: podman
+    edge.kyst.kube/device-group-name: podman

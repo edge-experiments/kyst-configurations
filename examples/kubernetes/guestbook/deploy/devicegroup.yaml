@@ -1,4 +1,4 @@
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: DeviceGroup
 metadata:
   # edit the name here

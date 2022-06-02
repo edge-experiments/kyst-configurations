@@ -1,6 +1,6 @@
 # https://github.com/rgolangh/microshift-on-flotta
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: ConfigSpec
 metadata:
   name: flotta
@@ -68,16 +68,16 @@ spec:
           env:
             - name: POD_NAME
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: DeviceGroup
 metadata:
   name: flotta
 spec:
   configSpecName: flotta
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: InventoryDevice
 metadata:
   name: flotta
   labels:
-    edge.limani.kube/device-group-name: flotta
+    edge.kyst.kube/device-group-name: flotta
