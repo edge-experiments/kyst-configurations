@@ -1,4 +1,4 @@
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: ConfigSpec
 metadata:
   name: bar
@@ -41,16 +41,16 @@ spec:
       selector:
         app: guestbook-ui
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: DeviceGroup
 metadata:
   name: bar
 spec:
   configSpecName: bar
 ---
-apiVersion: edge.limani.kube/v1alpha1
+apiVersion: edge.kyst.kube/v1alpha1
 kind: InventoryDevice
 metadata:
   name: bar
   labels:
-    edge.limani.kube/device-group-name: bar
+    edge.kyst.kube/device-group-name: bar
