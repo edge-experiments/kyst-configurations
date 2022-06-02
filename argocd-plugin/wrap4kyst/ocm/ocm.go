@@ -14,6 +14,8 @@ import (
 var manifestWorkName string = "wrap4kyst-generated"
 var manifestWorkNamespace string = "cluster1"
 
+// WrapIntoConfigSpec wraps all user's k8s manifests into a single ManifestsWork,
+// then wraps again the ManifestsWork into a ConfigSpec.
 func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 	configSpec, err := util.ReadEmtpyConfigSpec(inputFile)
 	if err != nil {
@@ -31,11 +33,6 @@ func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 		}
 		m.Object = obj
 		manifests = append(manifests, m)
-
-		// newFile, err := os.Create("lastobj.yaml")
-		// y := printers.YAMLPrinter{}
-		// defer newFile.Close()
-		// y.PrintObj(obj, newFile)
 	}
 
 	manifestwork := workv1.ManifestWork{
@@ -54,15 +51,24 @@ func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 		},
 	}
 
+	// // this method only outputs to io.Writer
+	// // "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	// s := serializerjson.NewYAMLSerializer(serializerjson.DefaultMetaFactory, scheme.Scheme, scheme.Scheme)
 	// err = s.Encode(&manifestwork, os.Stdout)
 
+	// // this method only outputs to io.Writer
+	// // "k8s.io/cli-runtime/pkg/printers"
+	// p := printers.YAMLPrinter{}
+	// p.PrintObj(&manifestwork, os.Stdout)
+
+	// this method can output to []byte
+	// "sigs.k8s.io/yaml"
 	bytes := []byte{}
 	bytes, err = json.Marshal(manifestwork)
 	bytes, err = ioyaml.JSONToYAML(bytes)
-	log.Printf("wrapped ManifestWork: %v\n", string(bytes))
-	configSpec["spec"].(map[string]interface{})["content"] = []string{string(bytes)}
+	log.Printf("wrapped ManifestWork:\n%v\n", string(bytes))
 
+	configSpec["spec"].(map[string]interface{})["content"] = []string{string(bytes)}
 	err = util.WriteConfigSpec(outputFile, configSpec)
 	if err != nil {
 		log.Fatalf("error writing ConfigSpec: %v", err)
