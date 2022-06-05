@@ -8,7 +8,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/scheme"
 	workv1 "open-cluster-management.io/api/work/v1"
-	ioyaml "sigs.k8s.io/yaml"
+	"sigs.k8s.io/yaml"
 )
 
 var manifestWorkName string = "wrap4kyst-generated"
@@ -65,7 +65,7 @@ func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 	// "sigs.k8s.io/yaml"
 	bytes := []byte{}
 	bytes, err = json.Marshal(manifestwork)
-	bytes, err = ioyaml.JSONToYAML(bytes)
+	bytes, err = yaml.JSONToYAML(bytes)
 	log.Printf("wrapped ManifestWork:\n%v\n", string(bytes))
 
 	configSpec["spec"].(map[string]interface{})["content"] = []string{string(bytes)}

@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/edge-experiments/wrap4kyst/flotta"
 	"github.com/edge-experiments/wrap4kyst/ocm"
 	"github.com/edge-experiments/wrap4kyst/util"
 )
@@ -24,6 +25,11 @@ func main() {
 
 	if *target == "ocm" {
 		ocm.WrapIntoConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir)
+		return
+	}
+
+	if *target == "flotta" {
+		flotta.WrapIntoConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir)
 		return
 	}
 
