@@ -6,31 +6,82 @@ metadata:
 spec:
   workload:
     manifests:
-      - apiVersion: v1
-        kind: ServiceAccount
-        metadata:
-          namespace: default
-          name: my-sa
-      - apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          namespace: default
-          name: nginx-deployment
-          labels:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        namespace: default
+        name: nginx-sa
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        namespace: default
+        name: nginx-deployment
+        labels:
+          app: nginx
+      spec:
+        replicas: 3
+        selector:
+          matchLabels:
             app: nginx
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
+        template:
+          metadata:
+            labels:
               app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              serviceAccountName: my-sa
-              containers:
-                - name: nginx
-                  image: nginx:1.14.2
-                  ports:
-                    - containerPort: 80
+          spec:
+            serviceAccountName: nginx-sa
+            containers:
+            - name: nginx
+              image: nginx:1.14.2
+              ports:
+              - containerPort: 80
+              volumeMounts:
+              - name: nginx-conf
+                mountPath: /etc/nginx/nginx.conf
+                subPath: nginx.conf
+                readOnly: true
+            volumes:
+            - name: nginx-conf
+              configMap:
+                name: nginx-cm
+                items:
+                  - key: nginx.conf
+                    path: nginx.conf
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: nginx
+        namespace: default
+        name: nginx-svc
+      spec:
+        ports:
+        - nodePort: 32064
+          port: 80
+          protocol: TCP
+          targetPort: 80
+        selector:
+          app: nginx
+        type: NodePort
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        namespace: default
+        name: nginx-cm
+      data:
+        nginx.conf: |
+          user nginx;
+          worker_processes  1;
+          events {
+            worker_connections  10240;
+          }
+          http {
+            server {
+                listen       80;
+                server_name  localhost;
+                location / {
+                  # the correct root should be /usr/share/nginx/html, this mistake is made on purpose for demo
+                  root   html;
+                  index  index.html index.htm;
+              }
+            }
+          }
