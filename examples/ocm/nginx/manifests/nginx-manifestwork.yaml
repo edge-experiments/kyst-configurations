@@ -39,6 +39,10 @@ spec:
                 mountPath: /etc/nginx/nginx.conf
                 subPath: nginx.conf
                 readOnly: true
+              - name: nginx-my-index
+                mountPath: /usr/share/nginx/html/my-index.html
+                subPath: my-index.html
+                readOnly: true
             volumes:
             - name: nginx-conf
               configMap:
@@ -46,6 +50,12 @@ spec:
                 items:
                   - key: nginx.conf
                     path: nginx.conf
+            - name: nginx-my-index
+              configMap:
+                name: nginx-my-index
+                items:
+                  - key: my-index.html
+                    path: my-index.html
     - apiVersion: v1
       kind: Service
       metadata:
@@ -79,9 +89,41 @@ spec:
                 listen       80;
                 server_name  localhost;
                 location / {
-                  # the correct root should be /usr/share/nginx/html, this mistake is made on purpose for demo
-                  root   html;
+                  root   /usr/share/nginx/html;
+                  # replace index.html with my-index.html for demo
                   index  index.html index.htm;
               }
             }
           }
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        namespace: default
+        name: nginx-my-index
+      data:
+        my-index.html: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+          <title>Welcome to MY nginx!</title>
+          <style>
+              body {
+                  width: 35em;
+                  margin: 0 auto;
+                  font-family: Tahoma, Verdana, Arial, sans-serif;
+              }
+          </style>
+          </head>
+          <body>
+          <h1>Welcome to MY nginx!</h1>
+          <p>If you see this page, the nginx web server is successfully installed and
+          working. Further configuration is required.</p>
+
+          <p>For online documentation and support please refer to
+          <a href="http://nginx.org/">nginx.org</a>.<br/>
+          Commercial support is available at
+          <a href="http://nginx.com/">nginx.com</a>.</p>
+
+          <p><em>Thank you for using nginx.</em></p>
+          </body>
+          </html>
