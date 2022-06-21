@@ -4,3 +4,11 @@ data:
       generate:
         command: ["/bin/bash", "-c"]
         args: ["wrap4kyst && kustomize build ."]
+    - name: wrap4kyst-ocm
+      generate:
+        command: ["/bin/bash", "-c"]
+        args: ["wrap4kyst --target=ocm && kustomize build ."]
+    - name: wrap4kyst-flotta
+      generate:
+        command: ["/bin/bash", "-c"]
+        args: ["wrap4kyst --target=flotta && kustomize build ."]
