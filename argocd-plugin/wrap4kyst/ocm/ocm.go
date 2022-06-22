@@ -14,7 +14,7 @@ import (
 var manifestWorkName string = "wrap4kyst-generated"
 
 // WrapIntoConfigSpec wraps all user's k8s manifests into a single ManifestsWork,
-// then wraps again the ManifestsWork into a ConfigSpec.
+// then wraps again the ManifestsWork and OCM-specific manifests (e.g. placements) into the Content of a ConfigSpec.
 func WrapIntoConfigSpec(inputFile, outputFile, manifestDir, extraManifestDir string) {
 	configSpec, err := util.ReadEmtpyConfigSpec(inputFile)
 	if err != nil {
