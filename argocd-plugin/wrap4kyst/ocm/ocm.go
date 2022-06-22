@@ -12,11 +12,10 @@ import (
 )
 
 var manifestWorkName string = "wrap4kyst-generated"
-var manifestWorkNamespace string = "cluster1"
 
 // WrapIntoConfigSpec wraps all user's k8s manifests into a single ManifestsWork,
 // then wraps again the ManifestsWork into a ConfigSpec.
-func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
+func WrapIntoConfigSpec(inputFile, outputFile, manifestDir, extraManifestDir string) {
 	configSpec, err := util.ReadEmtpyConfigSpec(inputFile)
 	if err != nil {
 		log.Fatalf("error reading empty configspec: %v", err)
@@ -41,8 +40,7 @@ func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 			Kind:       "ManifestWork",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      manifestWorkName,
-			Namespace: manifestWorkNamespace,
+			Name: manifestWorkName,
 		},
 		Spec: workv1.ManifestWorkSpec{
 			Workload: workv1.ManifestsTemplate{
@@ -68,7 +66,14 @@ func WrapIntoConfigSpec(inputFile, outputFile, manifestDir string) {
 	bytes, err = yaml.JSONToYAML(bytes)
 	log.Printf("wrapped ManifestWork:\n%v\n", string(bytes))
 
-	configSpec["spec"].(map[string]interface{})["content"] = []string{string(bytes)}
+	content := []string{string(bytes)}
+
+	extraRawContent := util.ComposeRawContent(extraManifestDir)
+	for _, item := range extraRawContent {
+		content = append(content, string(item))
+	}
+
+	configSpec["spec"].(map[string]interface{})["content"] = content
 	err = util.WriteConfigSpec(outputFile, configSpec)
 	if err != nil {
 		log.Fatalf("error writing ConfigSpec: %v", err)
