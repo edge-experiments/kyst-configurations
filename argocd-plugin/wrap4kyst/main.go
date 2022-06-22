@@ -16,6 +16,7 @@ func main() {
 	emptyConfigSpecFN := flag.String("empty-configspec", "./configspec-empty.yaml", "the configspec file whose content is to be populated")
 	configSpecFN := flag.String("configspec", "./configspec.yaml", "the configspec file with content populated")
 	manifestDir := flag.String("manifest-dir", "../manifests/", "the directory containing the to-be-wrapped manifests")
+	extraManifestDir := flag.String("extra-manifest-dir", "./extra-manifests/", "the directory containing target-specific manifests (Custom Resources)")
 	flag.Parse()
 
 	if *target != "k8s" && *target != "ocm" && *target != "flotta" {
@@ -24,7 +25,7 @@ func main() {
 	log.Println("target:", *target)
 
 	if *target == "ocm" {
-		ocm.WrapIntoConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir)
+		ocm.WrapIntoConfigSpec(*emptyConfigSpecFN, *configSpecFN, *manifestDir, *extraManifestDir)
 		return
 	}
 
