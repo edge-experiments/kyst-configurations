@@ -20,7 +20,7 @@ spec:
         targetRevision: argocd-scalability
         path: '{{path}}/deploy/'
         plugin:
-          name: wrap4kyst-ocm
+          name: wrap4kyst
       destination:
         server: https://13.56.252.125:6443
         namespace: argocd-scalability
