@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd-scalability
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/edge-experiments/kyst-configurations.git
+      revision: argocd-scalability
+      directories:
+      - path: argocd-scalability/git-generator-directory/*
+  template:
+    metadata:
+      name: '{{path[0]}}'
+    spec:
+      project: "argocd-scalability"
+      source:
+        repoURL: https://github.com/argoproj/argo-cd.git
+        targetRevision: argocd-scalability
+        path: '{{path}}/deploy/'
+      destination:
+        server: https://13.56.252.125:6443
+        namespace: argocd-scalability

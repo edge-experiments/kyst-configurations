@@ -3,7 +3,7 @@
 #### Manually create an Argo CD application
 For example:
 ```shell
-argocd app create argocd-scalability-0001 \
+argocd app create argocd-scalability-00001 \
 --config-management-plugin wrap4kyst-flotta \
 --repo https://github.com/edge-experiments/kyst-configurations.git \
 --path examples/kubernetes/nginx/deploy-flotta \
@@ -19,7 +19,7 @@ Looks like the [Git Generator](https://argo-cd.readthedocs.io/en/stable/operator
 
 #### Sync an Argo CD application using local directory
 ```shell
-argocd app sync argocd-scalability-0001 --local ./examples/kubernetes/nginx/deploy-flotta/
+argocd app sync argocd-scalability-00001 --local ./examples/kubernetes/nginx/deploy-flotta/
 ```
 
 ##### Prerequisites
@@ -32,3 +32,4 @@ docker cp 23058b2b81fb:/wrap4kyst .
 #### Questions
 - Telemetry?
 - (Pure) configurations v.s. workloads?
+- Apps v.s. clusters?
