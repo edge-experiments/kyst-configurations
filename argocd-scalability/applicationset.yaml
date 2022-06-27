@@ -12,13 +12,15 @@ spec:
       - path: argocd-scalability/git-generator-directory/*
   template:
     metadata:
-      name: '{{path[0]}}'
+      name: 'argocd-scalability-{{path.basename}}'
     spec:
-      project: "argocd-scalability"
+      project: default
       source:
-        repoURL: https://github.com/argoproj/argo-cd.git
+        repoURL: https://github.com/edge-experiments/kyst-configurations.git
         targetRevision: argocd-scalability
         path: '{{path}}/deploy/'
+        plugin:
+          name: wrap4kyst-ocm
       destination:
         server: https://13.56.252.125:6443
         namespace: argocd-scalability
