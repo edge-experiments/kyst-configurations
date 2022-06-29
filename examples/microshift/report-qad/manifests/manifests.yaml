@@ -6,7 +6,7 @@ metadata:
 data:
     # humidity, temperature, cpu_temp, gyroscope
   items_to_send: |
-    humidity, temperature, cpu_temp, gyroscope
+    humidity, temperature
 ---
 apiVersion: apps/v1
 kind: Deployment
