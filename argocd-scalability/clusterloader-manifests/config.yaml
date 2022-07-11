@@ -1,0 +1,53 @@
+name: test
+
+namespace:
+  number: 1
+
+tuningSets:
+- name: Uniform
+  qpsLoad:
+    qps: 0.1
+- name: Random
+  randomizedLoad:
+    averageQps: 0.5
+
+steps:
+# - name: Start measurements
+#   measurements:
+#   - Identifier: PodStartupLatency
+#     Method: PodStartupLatency
+#     Params:
+#       action: start
+#       labelSelector: group = test-pod
+#       threshold: 20s
+#   - Identifier: WaitForControlledPodsRunning
+#     Method: WaitForControlledPodsRunning
+#     Params:
+#       action: start
+#       apiVersion: apps/v1
+#       kind: Deployment
+#       labelSelector: group = test-deployment
+#       operationTimeout: 120s
+- name: Create application
+  phases:
+  - namespaceRange:
+      min: 1
+      max: 1
+    replicasPerNamespace: 3 # maximum that my edgeclusters can bear
+    tuningSet: Random
+    objectBundle:
+    - basename: test-application
+      objectTemplatePath: "test-application.yaml"
+      templateFillMap: {}
+# - name: Wait for pods to be running
+#   measurements:
+#   - Identifier: WaitForControlledPodsRunning
+#     Method: WaitForControlledPodsRunning
+#     Params:
+#       action: gather
+# - name: Measure pod startup latency
+#   measurements:
+#   - Identifier: PodStartupLatency
+#     Method: PodStartupLatency
+#     Params:
+#       action: gather

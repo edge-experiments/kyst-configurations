@@ -3,6 +3,8 @@ package util
 import (
 	"io/ioutil"
 	"log"
+	"strconv"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -48,4 +50,16 @@ func ComposeRawContent(dir string) [][]byte {
 		}
 	}
 	return rawContent
+}
+
+func appendTimestamp(prefix string) string {
+	suffix := strconv.FormatInt(time.Now().UnixNano(), 10)
+	return prefix + "-" + suffix
+}
+
+func AppendTimestampToConfigSpecName(configSpec map[string]interface{}) map[string]interface{} {
+	name := configSpec["metadata"].(map[string]interface{})["name"].(string)
+	name = appendTimestamp(name)
+	configSpec["metadata"].(map[string]interface{})["name"] = name
+	return configSpec
 }

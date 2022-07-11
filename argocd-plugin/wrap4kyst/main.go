@@ -17,6 +17,7 @@ func main() {
 	configSpecFN := flag.String("configspec", "./configspec.yaml", "the configspec file with content populated")
 	manifestDir := flag.String("manifest-dir", "../manifests/", "the directory containing the to-be-wrapped manifests")
 	extraManifestDir := flag.String("extra-manifest-dir", "./extra-manifests/", "the directory containing target-specific manifests (Custom Resources)")
+	uniqueConfigSpecName := flag.Bool("unique-configspec-name", false, "make the output configspec name unique, used for scalability experiments only")
 	flag.Parse()
 
 	if *target != "k8s" && *target != "ocm" && *target != "flotta" {
@@ -45,6 +46,10 @@ func main() {
 		content = append(content, string(item))
 	}
 	configSpec["spec"].(map[string]interface{})["content"] = content
+
+	if *uniqueConfigSpecName {
+		configSpec = util.AppendTimestampToConfigSpecName(configSpec)
+	}
 
 	err = util.WriteConfigSpec(*configSpecFN, configSpec)
 	if err != nil {
