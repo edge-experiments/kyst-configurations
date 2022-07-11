@@ -21,6 +21,8 @@ Here is an example:
 kubectl -n argocd apply -f argocd-scalability/applicationset.yaml
 ```
 
+### Create Argo CD applications using Cluster Loader
+
 ### Sync an Argo CD application using local directory
 ```shell
 argocd app sync argocd-scalability-00001 --local ./examples/kubernetes/nginx/deploy-flotta/
