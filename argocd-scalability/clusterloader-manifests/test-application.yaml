@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{.Name}}
+spec:
+  destination:
+    namespace: argocd-scalability
+    server: https://13.56.252.125:6443
+  project: default
+  source:
+    path: examples/kubernetes/guestbook/deploy-scalability/
+    plugin:
+      name: wrap4kyst-scalability
+    repoURL: https://github.com/edge-experiments/kyst-configurations.git
+    targetRevision: argocd-scalability
