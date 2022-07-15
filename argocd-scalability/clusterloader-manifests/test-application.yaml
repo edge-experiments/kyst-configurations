@@ -13,3 +13,6 @@ spec:
       name: wrap4kyst-scalability
     repoURL: https://github.com/edge-experiments/kyst-configurations.git
     targetRevision: argocd-scalability
+  syncPolicy:
+    automated:
+      prune: true
