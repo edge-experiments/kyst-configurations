@@ -55,4 +55,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("error writing configspec: %v", err)
 	}
+
+	err = util.DeleteEmptyConfigSpec(*emptyConfigSpecFN)
+	if err != nil {
+		log.Fatalf("error deleting empty configspec: %v", err)
+	}
 }

@@ -7,7 +7,7 @@ data:
     - name: wrap4kyst-scalability
       generate:
         command: ["/bin/bash", "-c"]
-        args: ["wrap4kyst --unique-configspec-name=true && kustomize build ."]
+        args: ["wrap4kyst --unique-configspec-name=true"]
     - name: wrap4kyst-ocm
       generate:
         command: ["/bin/bash", "-c"]
