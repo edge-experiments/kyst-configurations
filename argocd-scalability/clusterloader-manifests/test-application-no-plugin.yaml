@@ -8,11 +8,9 @@ spec:
     server: https://54.172.220.0:6443
   project: default
   source:
-    path: examples/kubernetes/guestbook/deploy-scalability/
-    plugin:
-      name: wrap4kyst-scalability
-    repoURL: https://github.com/edge-experiments/kyst-configurations.git
-    targetRevision: argocd-scalability
+    path: kyst-configspec/raw/1k/
+    repoURL: https://github.com/edge-experiments/argocd-scalability-source.git
+    targetRevision: main
   syncPolicy:
     automated:
       prune: true
