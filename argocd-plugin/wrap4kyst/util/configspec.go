@@ -3,6 +3,7 @@ package util
 import (
 	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
 	"time"
 
@@ -28,6 +29,14 @@ func WriteConfigSpec(filename string, dataStructure map[string]interface{}) erro
 		return err
 	}
 	err = ioutil.WriteFile(filename, bytes, 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteEmptyConfigSpec(filename string) error {
+	err := os.Remove(filename)
 	if err != nil {
 		return err
 	}
