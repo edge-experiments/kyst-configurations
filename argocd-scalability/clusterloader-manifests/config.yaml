@@ -9,7 +9,7 @@ tuningSets:
     qps: 0.1
 - name: Random
   randomizedLoad:
-    averageQps: 1
+    averageQps: 5
 
 steps:
 # - name: Start measurements
@@ -33,11 +33,12 @@ steps:
   - namespaceRange:
       min: 1
       max: 1
-    replicasPerNamespace: 5000
+    replicasPerNamespace: 2000
     tuningSet: Random
     objectBundle:
-    - basename: test-application
-      objectTemplatePath: "test-application.yaml"
+    - basename: application
+      # objectTemplatePath: "test-application-use-plugin.yaml"
+      objectTemplatePath: "test-application-no-plugin.yaml"
       templateFillMap: {}
 # - name: Wait for pods to be running
 #   measurements:

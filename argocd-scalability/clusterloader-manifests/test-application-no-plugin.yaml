@@ -2,13 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{.Name}}
+  labels:
+    group: no-plugin
 spec:
   destination:
     namespace: argocd-scalability
     server: https://54.172.220.0:6443
   project: default
   source:
-    path: kyst-configspec/raw/1k/
+    path: kyst-configspec/indexed/{{.Index}}/
     repoURL: https://github.com/edge-experiments/argocd-scalability-source.git
     targetRevision: main
   syncPolicy:
