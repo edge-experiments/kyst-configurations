@@ -17,7 +17,9 @@ func main() {
 	configSpecFN := flag.String("configspec", "./configspec.yaml", "the configspec file with content populated")
 	manifestDir := flag.String("manifest-dir", "../manifests/", "the directory containing the to-be-wrapped manifests")
 	extraManifestDir := flag.String("extra-manifest-dir", "./extra-manifests/", "the directory containing target-specific manifests (Custom Resources)")
+	// below are the flags for the scalability experiments
 	uniqueConfigSpecName := flag.Bool("unique-configspec-name", false, "make the output configspec name unique, used for scalability experiments only")
+	configSpecNameSuffix := flag.String("configspec-name-suffix", "", "the suffix to be appended to the configspec name, used for scalability experiments only")
 	flag.Parse()
 
 	if *target != "k8s" && *target != "ocm" && *target != "flotta" {
@@ -51,7 +53,12 @@ func main() {
 		configSpec = util.AppendTimestampToConfigSpecName(configSpec)
 	}
 
-	err = util.WriteConfigSpec(*configSpecFN, configSpec)
+	if *configSpecNameSuffix != "" {
+		configSpec = util.AppendSuffixToConfigSpecName(configSpec, *configSpecNameSuffix)
+	}
+
+	// the suffix is applied to (1) name of the object (2) name of the manifest
+	err = util.WriteConfigSpecWithNameSuffix(*configSpecFN, *configSpecNameSuffix, configSpec)
 	if err != nil {
 		log.Fatalf("error writing configspec: %v", err)
 	}

@@ -35,6 +35,18 @@ func WriteConfigSpec(filename string, dataStructure map[string]interface{}) erro
 	return nil
 }
 
+func WriteConfigSpecWithNameSuffix(original string, suffix string, dataStructure map[string]interface{}) error {
+	filename := original
+	if suffix != "" {
+		filename = filename[0:len(filename)-5] + "-" + suffix + ".yaml" // this is a bit of a hack, but it works when we have a ".yaml" in the original filename
+	}
+	err := WriteConfigSpec(filename, dataStructure)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func DeleteEmptyConfigSpec(filename string) error {
 	err := os.Remove(filename)
 	if err != nil {
@@ -69,6 +81,13 @@ func appendTimestamp(prefix string) string {
 func AppendTimestampToConfigSpecName(configSpec map[string]interface{}) map[string]interface{} {
 	name := configSpec["metadata"].(map[string]interface{})["name"].(string)
 	name = appendTimestamp(name)
+	configSpec["metadata"].(map[string]interface{})["name"] = name
+	return configSpec
+}
+
+func AppendSuffixToConfigSpecName(configSpec map[string]interface{}, suffix string) map[string]interface{} {
+	name := configSpec["metadata"].(map[string]interface{})["name"].(string)
+	name = name + "-" + suffix
 	configSpec["metadata"].(map[string]interface{})["name"] = name
 	return configSpec
 }

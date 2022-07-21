@@ -7,7 +7,7 @@ data:
     - name: wrap4kyst-scalability
       generate:
         command: ["/bin/bash", "-c"]
-        args: ["wrap4kyst --unique-configspec-name=true && cat configspec.yaml"]
+        args: ["suffix=$RANDOM && wrap4kyst --configspec-name-suffix=$suffix && cat configspec-$suffix.yaml"]
     - name: wrap4kyst-ocm
       generate:
         command: ["/bin/bash", "-c"]
