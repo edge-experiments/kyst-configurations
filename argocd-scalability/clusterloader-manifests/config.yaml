@@ -9,7 +9,7 @@ tuningSets:
     qps: 0.1
 - name: Random
   randomizedLoad:
-    averageQps: 5
+    averageQps: 2.5
 
 steps:
 # - name: Start measurements
