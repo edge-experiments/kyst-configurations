@@ -36,9 +36,9 @@ steps:
     replicasPerNamespace: 2000
     tuningSet: Random
     objectBundle:
-    - basename: application
-      # objectTemplatePath: "test-application-use-plugin.yaml"
-      objectTemplatePath: "test-application-no-plugin.yaml"
+    - basename: test-application
+      objectTemplatePath: "test-application-use-plugin.yaml"
+      # objectTemplatePath: "test-application-no-plugin.yaml"
       templateFillMap: {}
 # - name: Wait for pods to be running
 #   measurements:
